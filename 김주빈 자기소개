@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUBIN.STOCKS | 20살 주린이 김주빈의 투자 성장기 & 포트폴리오 쇼케이스</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        finance: {
+                            blue: '#0064ff', // 토스 블루 스타일
+                            red: '#ff2f55',  // 한국 주식 상승 레드
+                            green: '#00c73c', // 미국 주식 상승 그린
+                            gray: '#f8f9fa',   // 구글식 깔끔한 연회색
+                            dark: '#0f172a'   // 포인트 다크 네이비
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <!-- GSAP & ScrollTrigger for Samsung-style animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+        
+        /* GSAP 전용 애니메이션 대기 상태 (Flicker 방지) */
+        .gsap-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* 삼성 스타일 패닝 스크롤 백그라운드 효과 */
+        .immersive-hero {
+            will-change: transform, opacity;
+        }
+        
+        /* 글래스모피즘 프리미엄 카드 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-finance-blue/10 selection:text-finance-blue">
+
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#hero" class="text-lg font-bold tracking-tight text-finance-blue flex items-center gap-2">
+                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                <span class="font-extrabold">JUBIN.STOCKS</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-sm font-medium text-slate-600 hover:text-finance-blue transition-colors">주빈 프로필</a>
+                <a href="#analysis" class="text-sm font-medium text-slate-600 hover:text-finance-blue transition-colors">내 분석 & 계산기</a>
+                <a href="#community-portfolios" class="text-sm font-medium text-slate-600 hover:text-finance-blue transition-colors font-semibold flex items-center gap-1.5 text-finance-blue">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-finance-blue opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-finance-blue"></span>
+                    </span>
+                    주주 포트폴리오 갤러리
+                </a>
+                <a href="#bookmarks" class="text-sm font-medium text-slate-600 hover:text-finance-blue transition-colors">추천 사이트</a>
+                <a href="#share-board" class="text-sm font-medium text-slate-600 hover:text-finance-blue transition-colors">주주 소통망</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Immersive Hero Section (Samsung Product Page Style) -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center bg-white overflow-hidden pt-16">
+        <!-- Background Decorative Element (Controlled by Scroll) -->
+        <div id="hero-bg-scale" class="absolute inset-0 bg-slate-50/50 rounded-3xl mx-4 my-8 md:mx-12 md:my-16 transition-all duration-1000 z-0 origin-center"></div>
+
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 w-full py-12">
+            <!-- Left Text Content -->
+            <div id="hero-text" class="lg:col-span-7 space-y-6 text-left opacity-0 translate-y-8">
+                <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-semibold bg-finance-blue/10 text-finance-blue">
+                    🌱 20대 주주들의 소통 공간 & 성장 다이어리
+                </span>
+                
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-slate-900">
+                    반가워! 20살 주린이 <br>
+                    <span class="text-finance-blue underline decoration-wavy decoration-finance-blue/30 underline-offset-8">김주빈</span>의 투자 성장기야.
+                </h1>
+                
+                <p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-xl">
+                    현재 시드머니 100만 원으로 거시경제를 공부하고 있어! 거창한 차트 분석보다, 매일 세상을 배우고 자산을 불려가는 건강한 과정을 솔직하게 공유할게.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <a href="#community-portfolios" class="px-6 py-3.5 rounded-xl bg-finance-blue hover:bg-blue-600 text-white font-bold text-sm transition-all duration-300 shadow-lg shadow-finance-blue/20 flex items-center gap-2">
+                        <span>주주 포트폴리오 구경하기</span>
+                        <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#analysis" class="px-6 py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold text-sm text-slate-700 transition-all duration-300 flex items-center gap-2">
+                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                        <span>미래 복리 계산해보기</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Visual Image Area (Samsung-style scaling image box) -->
+            <div id="hero-image-box" class="lg:col-span-5 flex justify-center opacity-0 translate-y-12">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute -inset-2 rounded-3xl bg-gradient-to-r from-finance-blue/20 to-emerald-500/10 opacity-60 blur-xl"></div>
+                    <div class="relative bg-white border border-slate-100 p-4 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" 
+                             alt="노트북으로 회의와 분석을 하고 있는 20대 청년들" 
+                             class="w-full h-72 object-cover rounded-2xl"
+                             onerror="this.src='https://placehold.co/600x400/f8f9fa/0064ff?text=Youth+Stock+Meeting'">
+                        <div class="pt-5 pb-2 px-2 bg-white">
+                            <div class="flex items-center justify-between">
+                                <p class="text-xs font-bold text-finance-blue tracking-wider uppercase">YOUTH STOCK CLUB</p>
+                                <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">20대 개미들</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mt-2">"시드는 작지만, 복리의 시간은 무한하니까"</h3>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">배울 시간이 가득한 20대야말로 투자의 진짜 골든 아워야.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section with Smooth Dynamic Reveal -->
+    <section id="about" class="py-32 bg-[#fbfcfd] border-b border-slate-100 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="gsap-reveal text-center max-w-2xl mx-auto space-y-3 mb-20">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">주린이 김주빈 프로필</h2>
+                <p class="text-sm md:text-base text-slate-500">투명하고 솔직하게 공개하는 제 투자 상태와 가치관입니다.</p>
+                <div class="w-12 h-1 bg-finance-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                <!-- Spec Dashboard Card -->
+                <div class="gsap-reveal md:col-span-5 bg-white border border-slate-100 p-8 rounded-3xl shadow-xl shadow-slate-100/50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-14 h-14 rounded-2xl bg-finance-blue/5 border border-finance-blue/10 flex items-center justify-center text-finance-blue shadow-inner">
+                                <i data-lucide="user-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">김주빈 (20)</h3>
+                                <span class="text-xs text-finance-blue font-bold tracking-widest uppercase">Gen Z Stock Investor</span>
+                            </div>
+                        </div>
+
+                        <!-- Info Rows -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between border-b border-slate-50 pb-3">
+                                <span class="text-sm font-semibold text-slate-400">나이</span>
+                                <span class="text-sm font-bold text-slate-900">만 20세 (젊음이 최고의 자산!)</span>
+                            </div>
+                            <div class="flex items-center justify-between border-b border-slate-50 pb-3">
+                                <span class="text-sm font-semibold text-slate-400">투자 경력</span>
+                                <span class="inline-flex items-center gap-1 text-xs font-bold text-finance-blue bg-finance-blue/5 px-3 py-1 rounded-full">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-finance-blue animate-pulse"></span>
+                                    병아리 주린이 1달차 🐤
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between border-b border-slate-50 pb-3">
+                                <span class="text-sm font-semibold text-slate-400">현재 총 시드머니</span>
+                                <span class="text-base font-extrabold text-slate-900">1,000,000 원</span>
+                            </div>
+                            <div class="flex items-center justify-between pb-1">
+                                <span class="text-sm font-semibold text-slate-400">나의 다짐</span>
+                                <span class="text-xs font-bold text-slate-700 bg-emerald-50 text-finance-green px-2.5 py-1 rounded-md">조급함 버리고 매일 1%씩 공부하기</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-50 mt-8 text-xs text-slate-400 flex items-start gap-2.5 leading-relaxed">
+                        <i data-lucide="help-circle" class="w-4 h-4 text-slate-300 shrink-0 mt-0.5"></i>
+                        <span>아르바이트비와 용돈을 성실히 아껴 시드머니를 조금씩 증액해 나갈 장기 로드맵을 걷고 있어.</span>
+                    </div>
+                </div>
+
+                <!-- SWOT Profile Analysis Card -->
+                <div class="gsap-reveal md:col-span-7 bg-white border border-slate-100 p-8 rounded-3xl shadow-xl shadow-slate-100/50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <i data-lucide="compass" class="w-5 h-5 text-amber-500"></i>
+                            <span>주식 투자 성향 자가분석 (SWOT)</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Strength -->
+                            <div class="space-y-3 p-5 bg-emerald-50/30 rounded-2xl border border-emerald-100/50">
+                                <div class="flex items-center gap-1.5 text-finance-green font-bold text-sm">
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                    <span>강점 (Strengths)</span>
+                                </div>
+                                <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                                    <li><strong class="text-slate-900">• 빠른 메타인지</strong><br>모르는 것은 바로 인정하고 배우려는 배움의 자세 장착.</li>
+                                    <li><strong class="text-slate-900">• 신기술 민감도</strong><br>AI, 반도체 및 새로운 커뮤니티 밈 트렌드를 캐치하는 속도가 매우 빠름.</li>
+                                    <li><strong class="text-slate-900">• 단단한 하락 멘탈</strong><br>하락장을 무서워하기보다는 세상이 주는 귀한 배움의 기회로 낙관함.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Weakness -->
+                            <div class="space-y-3 p-5 bg-rose-50/30 rounded-2xl border border-rose-100/50">
+                                <div class="flex items-center gap-1.5 text-finance-red font-bold text-sm">
+                                    <i data-lucide="minus-circle" class="w-4 h-4"></i>
+                                    <span>약점 (Weaknesses)</span>
+                                </div>
+                                <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                                    <li><strong class="text-slate-900">• 군중심리 & FOMO</strong><br>급등하는 핫한 종목을 보면 "나만 소외되나" 싶어 손끝이 떨릴 때가 있음.</li>
+                                    <li><strong class="text-slate-900">• 초보자의 얇은 귀</strong><br>커뮤니티 카더라 통신이나 자극적인 뉴스 기사에 뇌동매매할 위험이 존재함.</li>
+                                    <li><strong class="text-slate-900">• 불타오르는 조급함</strong><br>적립식 매수가 정답인 걸 알면서도 하루빨리 큰 성장을 갈구함.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-slate-50 rounded-2xl text-xs text-slate-500 border border-slate-100/80 leading-relaxed">
+                        <span class="font-bold text-slate-700">💡 위기 극복 플랜 :</span> 감정적으로 매수 버튼에 가던 손가락을 멈추기 위해, 매수 전 반드시 연환산 환율과 미국 10년물 국채 금리를 체크하는 3분 확인 루틴을 성실히 지키는 중이야!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio & Compound Interest Calculator Section -->
+    <section id="analysis" class="py-32 bg-white border-b border-slate-100 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="gsap-reveal text-center max-w-2xl mx-auto space-y-3 mb-20">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">주빈이의 자산 & 미래 복리 분석</h2>
+                <p class="text-sm md:text-base text-slate-500">100만 원으로 구성한 초실속형 포트폴리오와 미래 복리 시뮬레이션입니다.</p>
+                <div class="w-12 h-1 bg-finance-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <!-- My Current Allocation -->
+                <div class="gsap-reveal lg:col-span-6 bg-slate-50/50 border border-slate-100 p-8 rounded-3xl space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center justify-between">
+                            <span>보유 자산 포트폴리오 현황</span>
+                            <span class="text-xs text-slate-400 font-mono">시드: 100만 원</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">포모를 예방하고 심리적 안정감을 주기 위해 세밀하게 배분한 주빈이의 원형 자산 비율이야.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Asset: AAPL -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center font-bold text-xs">AAPL</span>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-950">애플 (AAPL)</h4>
+                                        <span class="text-[10px] text-slate-400 font-medium">든든한 내 포트폴리오의 심장</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-extrabold text-slate-950">40% (40만 원)</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-950 rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Asset: SEC -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 rounded-xl bg-blue-800 text-white flex items-center justify-center font-bold text-xs">SEC</span>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-900">삼성전자 (005930)</h4>
+                                        <span class="text-[10px] text-slate-400 font-medium">대한민국 대표 반도체 애국 벨트</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-extrabold text-blue-800">30% (30만 원)</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-600 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Asset: CASH -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 rounded-xl bg-emerald-50 text-finance-green flex items-center justify-center font-bold text-xs">
+                                        <i data-lucide="wallet" class="w-5 h-5"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-900">현금 (CMA 파킹통장)</h4>
+                                        <span class="text-[10px] text-slate-400 font-medium">언제든 출격 준비를 완료한 실탄</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-extrabold text-finance-green">30% (30만 원)</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-finance-green rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Calculator -->
+                <div class="gsap-reveal lg:col-span-6 bg-white border border-slate-100 p-8 rounded-3xl shadow-xl shadow-slate-100/50 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="calculator" class="w-5 h-5 text-finance-blue"></i>
+                            <span>복리의 마법! 20대 미래 자산 계산기</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">적은 시드가 시간의 복리를 만났을 때 생기는 변화를 시뮬레이션해봐!</p>
+                    </div>
+
+                    <!-- Calculator Input Fields -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1.5">초기 자본금 (원)</label>
+                            <input type="number" id="calc-seed" value="1000000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-finance-blue/10 focus:border-finance-blue text-sm outline-none transition-all font-semibold">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5">목표 연수익률 (%)</label>
+                                <input type="number" id="calc-rate" value="12" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-finance-blue/10 focus:border-finance-blue text-sm outline-none transition-all font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1.5">투자 기간 (년)</label>
+                                <input type="number" id="calc-years" value="10" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-finance-blue/10 focus:border-finance-blue text-sm outline-none transition-all font-semibold">
+                            </div>
+                        </div>
+
+                        <button onclick="calculateCompound()" class="w-full py-3.5 bg-finance-blue hover:bg-blue-600 text-white font-bold text-xs rounded-xl transition-all shadow-md shadow-finance-blue/10 flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            <span>미래 도달 자산 계산하기</span>
+                        </button>
+                    </div>
+
+                    <!-- Calculator Result View -->
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100/80 space-y-2">
+                        <span class="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">복리 계산 예측 결과</span>
+                        <div class="flex items-baseline justify-between">
+                            <span class="text-xs text-slate-600 font-medium">원금 + 복리 누적액</span>
+                            <span id="calc-result-val" class="text-xl font-extrabold text-finance-blue">3,105,848 원</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-normal pt-1.5 border-t border-slate-200/60">
+                            * 배당 재투자 및 양도소득세 등은 배제한 순수 단순복리 연산입니다. 매일 올바르게 배우면 불가능한 목표가 아닙니다!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Community Portfolios Visual Showcase & Interactive Builder -->
+    <section id="community-portfolios" class="py-32 bg-[#fbfcfd] border-b border-slate-100 relative scroll-mt-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="gsap-reveal text-center max-w-2xl mx-auto space-y-3 mb-20">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">또래 주주 포트폴리오 갤러리</h2>
+                <p class="text-sm md:text-base text-slate-500">다른 사람들은 어떻게 자산을 쪼개고 투자하고 있을까? 서로 영감을 나눠보자.</p>
+                <div class="w-12 h-1 bg-finance-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <!-- Portfolio Interactive Creator Form (Left) -->
+                <div class="gsap-reveal lg:col-span-5 bg-white border border-slate-100 p-8 rounded-3xl shadow-xl shadow-slate-100/50 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="plus" class="w-5 h-5 text-finance-blue"></i>
+                            <span>내 포트폴리오 양식 등록하기</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">자신의 자산 비중을 보기 좋게 입력하면 즉시 예쁜 카드가 구워져!</p>
+                    </div>
+
+                    <form id="portfolio-creator-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">닉네임</label>
+                            <input type="text" id="pf-author" placeholder="예: 한강희망고문" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">나의 투자 성향</label>
+                            <select id="pf-style" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all">
+                                <option value="🇺🇸 미국주식 성장 위주">🇺🇸 미국주식 성장 위주</option>
+                                <option value="🇰🇷 국장 든든 우량주">🇰🇷 국장 든든 우량주</option>
+                                <option value="💵 안전한 미국 배당주">💵 안전한 미국 배당주</option>
+                                <option value="🔥 불타는 야수의 레버리지">🔥 불타는 야수의 레버리지</option>
+                            </select>
+                        </div>
+                        
+                        <div class="pt-3 border-t border-slate-100 space-y-3">
+                            <span class="block text-xs font-bold text-slate-700">자산 배분율 설정 (합쳐서 100%를 맞춰줘!)</span>
+                            
+                            <!-- Asset Item 1 -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="pf-asset1-name" value="테슬라" placeholder="종목명 1" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                                <input type="number" id="pf-asset1-pct" value="50" placeholder="비율 (%)" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                            </div>
+                            <!-- Asset Item 2 -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="pf-asset2-name" value="엔비디아" placeholder="종목명 2" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                                <input type="number" id="pf-asset2-pct" value="30" placeholder="비율 (%)" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                            </div>
+                            <!-- Asset Item 3 -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="pf-asset3-name" value="현금" placeholder="종목명 3" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                                <input type="number" id="pf-asset3-pct" value="20" placeholder="비율 (%)" required class="px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-finance-blue">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-finance-blue hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-all shadow-sm flex items-center justify-center gap-1.5">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                            <span>포트폴리오 생성 및 자랑하기</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Portfolio Display List (Right) -->
+                <div class="gsap-reveal lg:col-span-7 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="layers" class="w-4 h-4 text-finance-blue"></i>
+                            참가중인 주주 포트폴리오 피드
+                        </span>
+                        <span id="pf-total-count" class="text-xs bg-slate-100 text-slate-600 font-bold px-2.5 py-1 rounded-full">3개 등록됨</span>
+                    </div>
+
+                    <!-- Portfolio Grid Container -->
+                    <div id="portfolio-feed-container" class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[550px] overflow-y-auto pr-1">
+                        <!-- Portfolios will be dynamically rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Economic Portal Bookmarks (No-clutter beautiful view) -->
+    <section id="bookmarks" class="py-32 bg-white border-b border-slate-100 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="gsap-reveal text-center max-w-2xl mx-auto space-y-3 mb-20">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">글로벌 정세 및 필수 주식 포털</h2>
+                <p class="text-sm md:text-base text-slate-500">주빈이가 매일 아침 뉴스와 지표, 미국 거시 주가 흐름을 트래킹하기 위해 애용하는 가이드 사이트 모음이야.</p>
+                <div class="w-12 h-1 bg-finance-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Portal 1: Investing.com -->
+                <div class="gsap-reveal bg-[#fbfcfd] border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shadow-inner">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-sm">인베스팅닷컴 (Investing)</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            실시간 미 선물 지수, 금리 일정표, 인플레이션 및 고용 원자재 트렌드를 정교하게 검토하기 적합한 글로벌 지표 허브.
+                        </p>
+                    </div>
+                    <a href="https://kr.investing.com" target="_blank" rel="noopener" class="text-xs font-bold text-finance-blue hover:underline flex items-center gap-1 mt-6 pt-4 border-t border-slate-100">
+                        <span>실시간 지수 체크</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <!-- Portal 2: Yahoo Finance -->
+                <div class="gsap-reveal bg-[#fbfcfd] border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" style="transition-delay: 50ms;">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shadow-inner">
+                            <i data-lucide="bar-chart-4" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-sm">야후 파이낸스 (Yahoo)</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            미국 오리지널 경제 기사와 투자은행(IB) 애널리스트 의견, 주주 가치 지표(PBR, ROE) 상세 분석 최고 포털.
+                        </p>
+                    </div>
+                    <a href="https://finance.yahoo.com" target="_blank" rel="noopener" class="text-xs font-bold text-finance-blue hover:underline flex items-center gap-1 mt-6 pt-4 border-t border-slate-100">
+                        <span>영어 뉴스/시황 가기</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <!-- Portal 3: Toss Feed -->
+                <div class="gsap-reveal bg-[#fbfcfd] border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" style="transition-delay: 100ms;">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-finance-blue flex items-center justify-center shadow-inner">
+                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-sm">토스증권 데일리 피드</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            딱딱하고 어려운 경제 용어가 지겨운 20대들을 위해 금융 소식과 종목 소문을 이야기하듯이 핵심만 재미나게 정제한 피드.
+                        </p>
+                    </div>
+                    <a href="https://toss.im" target="_blank" rel="noopener" class="text-xs font-bold text-finance-blue hover:underline flex items-center gap-1 mt-6 pt-4 border-t border-slate-100">
+                        <span>트렌드 뉴스 보기</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <!-- Portal 4: Hankyung Insight -->
+                <div class="gsap-reveal bg-[#fbfcfd] border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" style="transition-delay: 150ms;">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-red-50 text-finance-red flex items-center justify-center shadow-inner">
+                            <i data-lucide="newspaper" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-sm">한경 마켓인사이트</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            국내 자본 시장 소식 및 채권 금리, 우량 법인의 유상증자/공시 이슈까지 넓고 깊게 포괄해주는 국내 1등 자본신문 마켓 탭.
+                        </p>
+                    </div>
+                    <a href="https://marketinsight.hankyung.com" target="_blank" rel="noopener" class="text-xs font-bold text-finance-blue hover:underline flex items-center gap-1 mt-6 pt-4 border-t border-slate-100">
+                        <span>시장 공시 분석 보기</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Share Board (Community Dialogue Engine) -->
+    <section id="share-board" class="py-32 bg-[#fbfcfd] scroll-mt-16 relative">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <!-- Left Info Panel -->
+            <div class="gsap-reveal lg:col-span-5 space-y-6">
+                <div class="space-y-4">
+                    <h2 class="text-3xl font-extrabold text-slate-900">또래 투자자 소통망</h2>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        주식 투자에 정답은 없대! 서로의 자산 규모나 현재 애정하는 최애 종목이 무엇인지 서로 등록하고 교류해보자. 20대 개미 주주들의 솔직하고 자극 없는 건강한 투자를 지지해!
+                    </p>
+                </div>
+
+                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-3">
+                    <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                        <i data-lucide="megaphone" class="w-4 h-4 text-amber-500"></i>
+                        <span>주빈이의 투자 조언 한마디</span>
+                    </span>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        "인생은 길고 주식 개장일은 많다! 남들 수익률 자랑에 초조해져서 영끌 투자하지 말고, 나만의 템포를 지키며 소중한 근로 소득의 일부로 안전하게 즐기자."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Comment & Message Feed Engine -->
+            <div class="gsap-reveal lg:col-span-7 space-y-6">
+                <div class="bg-white border border-slate-100 p-6 md:p-8 rounded-3xl shadow-xl shadow-slate-100/50 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="message-square-plus" class="w-5 h-5 text-finance-blue"></i>
+                            <span>응원 댓글 & 주식 이야기 나누기</span>
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">방문자의 닉네임과 응원 소감을 자유롭게 공유해주세요. (로컬 데이터 보존)</p>
+                    </div>
+
+                    <!-- Input Form -->
+                    <form id="stock-share-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label for="sb-author" class="block text-xs font-bold text-slate-500 mb-1">닉네임</label>
+                                <input type="text" id="sb-author" required placeholder="예: 한강뷰개미" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all">
+                            </div>
+                            <div>
+                                <label for="sb-seed" class="block text-xs font-bold text-slate-500 mb-1">내 시드 규모</label>
+                                <select id="sb-seed" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all">
+                                    <option value="💰 100만 원 이하 (소액 개미)">💰 100만 원 이하</option>
+                                    <option value="💵 100만 ~ 500만 원">💵 100만 ~ 500만 원</option>
+                                    <option value="💎 500만 원 이상 (든든 주주)">💎 500만 원 이상</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="sb-favorite" class="block text-xs font-bold text-slate-500 mb-1">최애 관심주</label>
+                                <input type="text" id="sb-favorite" required placeholder="예: 테슬라 / TSLA" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="sb-content" class="block text-xs font-bold text-slate-500 mb-1">다짐 및 자유 응원글</label>
+                            <textarea id="sb-content" rows="3" required placeholder="복리를 타고 내 자산 무한 우상향 드가자~" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-finance-blue/10 focus:outline-none transition-all resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-finance-blue hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>소중한 의견 등록하기</span>
+                        </button>
+                    </form>
+
+                    <!-- Feed Area -->
+                    <div class="border-t border-slate-100 pt-6">
+                        <h4 class="text-xs font-bold text-slate-500 mb-4 flex items-center justify-between">
+                            <span>등록된 실시간 주주 대화 피드</span>
+                            <span id="sb-count" class="px-2.5 py-0.5 rounded-full bg-slate-100 text-xs text-finance-blue font-bold">0명</span>
+                        </h4>
+                        
+                        <div id="share-feed-list" class="space-y-4 max-h-72 overflow-y-auto pr-1">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification Widget -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-xl flex items-center gap-2.5 transition-all duration-300 translate-y-24 opacity-0 pointer-events-none">
+        <div class="w-5 h-5 rounded-full bg-finance-green/20 flex items-center justify-center">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-finance-green"></i>
+        </div>
+        <span id="toast-message" class="text-xs font-bold">성공적으로 완료되었습니다.</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-100 py-16 bg-white text-slate-400">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs">
+            <div class="flex items-center gap-2 text-slate-700">
+                <i data-lucide="trending-up" class="w-5 h-5 text-finance-blue"></i>
+                <span class="font-extrabold tracking-tight">JUBIN.STOCKS</span>
+            </div>
+            <p>&copy; 2026 김주빈의 주식 성장 포트폴리오. All Rights Reserved.</p>
+            <a href="#hero" class="hover:text-finance-blue flex items-center gap-1.5 transition-colors font-semibold"><i data-lucide="arrow-up-circle" class="w-4 h-4"></i> 맨 위로</a>
+        </div>
+    </footer>
+
+    <script>
+        // 1. GSAP & ScrollTrigger - Samsung Style Immersive Scrolling Animation Engine
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero scale down on scroll
+            gsap.fromTo("#hero-bg-scale", 
+                { scale: 0.9, opacity: 0.5, borderRadius: "100px" },
+                {
+                    scale: 1.0,
+                    opacity: 1,
+                    borderRadius: "0px",
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        start: "top top",
+                        end: "bottom center",
+                        scrub: 1.5
+                    }
+                }
+            );
+
+            // Hero details fade-in
+            gsap.to("#hero-text", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            gsap.to("#hero-image-box", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.4
+            });
+
+            // Smooth reveal animation on scroll for all other sections
+            const reveals = gsap.utils.toArray('.gsap-reveal');
+            reveals.forEach(el => {
+                gsap.fromTo(el, 
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            });
+        });
+
+        // 2. Toast Utility
+        const toastEl = document.getElementById('toast');
+        const toastMsgEl = document.getElementById('toast-message');
+
+        function showToast(message) {
+            toastMsgEl.textContent = message;
+            toastEl.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            toastEl.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toastEl.classList.remove('translate-y-0', 'opacity-100');
+                toastEl.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // 3. Future Compound Interest Calculator Engine
+        window.calculateCompound = function() {
+            const seed = parseFloat(document.getElementById('calc-seed').value) || 0;
+            const rate = parseFloat(document.getElementById('calc-rate').value) || 0;
+            const years = parseInt(document.getElementById('calc-years').value) || 0;
+
+            if (seed <= 0 || rate <= 0 || years <= 0) {
+                showToast("모든 입력값을 1보다 크게 설정해줘!");
+                return;
+            }
+
+            // A = P(1 + r)^t
+            const finalVal = seed * Math.pow((1 + (rate / 100)), years);
+            const formattedVal = Math.round(finalVal).toLocaleString('ko-KR');
+            
+            document.getElementById('calc-result-val').textContent = `${formattedVal} 원`;
+            showToast("미래 복리 분석 성공! 꾸준함의 힘을 믿어봐 📈");
+        }
+
+        // 4. Community Portfolio Showcase Engine
+        const defaultPortfolios = [
+            {
+                id: 101,
+                author: "용감한이십대",
+                style: "🇺🇸 미국주식 성장 위주",
+                assets: [
+                    { name: "테슬라 (TSLA)", pct: 60, color: "bg-red-500" },
+                    { name: "엔비디아 (NVDA)", pct: 30, color: "bg-amber-500" },
+                    { name: "현금 (CMA)", pct: 10, color: "bg-emerald-500" }
+                ],
+                date: "2026-06-02 11:30"
+            },
+            {
+                id: 102,
+                author: "배당수집가",
+                style: "💵 안전한 미국 배당주",
+                assets: [
+                    { name: "리얼티인컴 (O)", pct: 40, color: "bg-blue-600" },
+                    { name: "SCHD", pct: 40, color: "bg-indigo-500" },
+                    { name: "S&P500 ETF", pct: 20, color: "bg-violet-500" }
+                ],
+                date: "2026-06-02 12:15"
+            },
+            {
+                id: 103,
+                author: "국장생존자",
+                style: "🇰🇷 국장 든든 우량주",
+                assets: [
+                    { name: "삼성전자", pct: 50, color: "bg-cyan-600" },
+                    { name: "현대차", pct: 30, color: "bg-slate-700" },
+                    { name: "현금", pct: 20, color: "bg-emerald-500" }
+                ],
+                date: "2026-06-02 15:40"
+            }
+        ];
+
+        function getPortfolios() {
+            const data = localStorage.getItem('jubin_portfolios');
+            if (!data) {
+                localStorage.setItem('jubin_portfolios', JSON.stringify(defaultPortfolios));
+                return defaultPortfolios;
+            }
+            return JSON.parse(data);
+        }
+
+        function renderPortfolios() {
+            const container = document.getElementById('portfolio-feed-container');
+            const totalCountEl = document.getElementById('pf-total-count');
+            const list = getPortfolios();
+            
+            container.innerHTML = '';
+            totalCountEl.textContent = `${list.length}개 등록됨`;
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400 text-xs">포트폴리오가 아직 없습니다. 1호 등록자가 되어주세요!</div>`;
+                return;
+            }
+
+            // Newest first
+            [...list].reverse().forEach(pf => {
+                const card = document.createElement('div');
+                card.className = 'p-6 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow relative group';
+                
+                // Construct progress bar segments
+                let progressSegments = '';
+                let legendList = '';
+                
+                pf.assets.forEach(asset => {
+                    if (asset.pct > 0) {
+                        progressSegments += `<div class="h-full ${asset.color || 'bg-slate-500'}" style="width: ${asset.pct}%" title="${asset.name}: ${asset.pct}%"></div>`;
+                        legendList += `
+                            <div class="flex items-center justify-between text-[11px] text-slate-600">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full ${asset.color || 'bg-slate-500'}"></span>
+                                    <span class="font-medium">${escapeHtml(asset.name)}</span>
+                                </div>
+                                <span class="font-extrabold text-slate-900">${asset.pct}%</span>
+                            </div>
+                        `;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2 mb-4">
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900">${escapeHtml(pf.author)}</h4>
+                            <span class="text-[10px] text-finance-blue font-bold">${escapeHtml(pf.style)}</span>
+                        </div>
+                        <span class="text-[9px] text-slate-400 font-mono">${pf.date}</span>
+                    </div>
+
+                    <!-- Visual Integrated Bar Chart -->
+                    <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex mb-4">
+                        ${progressSegments}
+                    </div>
+
+                    <!-- Legend list -->
+                    <div class="space-y-1.5">
+                        ${legendList}
+                    </div>
+
+                    <!-- Delete button -->
+                    <button onclick="deletePortfolio(${pf.id})" class="absolute right-3 top-3 p-1 rounded hover:bg-rose-50 text-slate-300 hover:text-finance-red opacity-0 group-hover:opacity-100 transition-all duration-200" title="지우기">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Form registration trigger for creator
+        document.getElementById('portfolio-creator-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const author = document.getElementById('pf-author').value.trim();
+            const style = document.getElementById('pf-style').value;
+            
+            const n1 = document.getElementById('pf-asset1-name').value.trim();
+            const p1 = parseInt(document.getElementById('pf-asset1-pct').value) || 0;
+            const n2 = document.getElementById('pf-asset2-name').value.trim();
+            const p2 = parseInt(document.getElementById('pf-asset2-pct').value) || 0;
+            const n3 = document.getElementById('pf-asset3-name').value.trim();
+            const p3 = parseInt(document.getElementById('pf-asset3-pct').value) || 0;
+
+            if (!author || !n1 || !n2 || !n3) {
+                showToast("모든 빈칸을 채워주세요!");
+                return;
+            }
+
+            if (p1 + p2 + p3 !== 100) {
+                showToast(`비율의 합이 100%여야 합니다! 현재: ${p1 + p2 + p3}%`);
+                return;
+            }
+
+            const list = getPortfolios();
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const newPf = {
+                id: Date.now(),
+                author,
+                style,
+                assets: [
+                    { name: n1, pct: p1, color: "bg-rose-500" },
+                    { name: n2, pct: p2, color: "bg-amber-500" },
+                    { name: n3, pct: p3, color: "bg-emerald-500" }
+                ],
+                date: dateStr
+            };
+
+            list.push(newPf);
+            localStorage.setItem('jubin_portfolios', JSON.stringify(list));
+            
+            this.reset();
+            renderPortfolios();
+            showToast("포트폴리오 생성 및 자랑 등록 성공! 🎉");
+        });
+
+        window.deletePortfolio = function(id) {
+            let list = getPortfolios();
+            list = list.filter(item => item.id !== id);
+            localStorage.setItem('jubin_portfolios', JSON.stringify(list));
+            renderPortfolios();
+            showToast("성공적으로 포트폴리오를 삭제했습니다.");
+        }
+
+        // 5. Live LocalStorage Comment Share Feed (Original Chat board)
+        const defaultComments = [
+            { id: 1, author: '동치미개미', seed: '💰 100만 원 이하 (소액 개미)', favorite: '엔비디아 (NVDA)', content: '주빈이 파이팅! 나도 20살인데 시드 80만 원으로 AI 주식 모으고 있어. 복리 연 15% 가자!', date: '2026-06-02 12:44' },
+            { id: 2, author: '배당금내놔', seed: '💵 100만 ~ 500만 원', favorite: '맥쿼리인프라', content: '20살에 주식 시작한 것 자체가 이미 또래 중 상위 1%다. 조급해하지 말고 배당 든든히 복리로 키워!', date: '2026-06-02 14:15' }
+        ];
+
+        function getFeedEntries() {
+            const data = localStorage.getItem('jubin_stocks_feed');
+            if (!data) {
+                localStorage.setItem('jubin_stocks_feed', JSON.stringify(defaultComments));
+                return defaultComments;
+            }
+            return JSON.parse(data);
+        }
+
+        function renderFeed() {
+            const listEl = document.getElementById('share-feed-list');
+            const countEl = document.getElementById('sb-count');
+            const entries = getFeedEntries();
+            
+            listEl.innerHTML = '';
+            countEl.textContent = `${entries.length}명`;
+
+            if (entries.length === 0) {
+                listEl.innerHTML = `<div class="text-center py-8 text-slate-400 text-xs">등록된 주주들의 현황이 아직 없어. 첫 주자가 되어줘!</div>`;
+                return;
+            }
+
+            [...entries].reverse().forEach(entry => {
+                const item = document.createElement('div');
+                item.className = 'p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-all relative group';
+                
+                item.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-1 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-xs text-slate-800">${escapeHtml(entry.author)}</span>
+                            <span class="text-[9px] px-2 py-0.5 rounded-full font-bold bg-white border border-slate-100 text-slate-500">${entry.seed}</span>
+                        </div>
+                        <span class="text-[9px] text-slate-400 font-mono">${entry.date}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[10px] font-bold text-finance-blue mb-1.5">
+                        <i data-lucide="heart" class="w-3 h-3 fill-current"></i>
+                        <span>최애 관심주: ${escapeHtml(entry.favorite)}</span>
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-normal pr-8">${escapeHtml(entry.content)}</p>
+                    <button onclick="deleteFeedItem(${entry.id})" class="absolute right-3 bottom-3 p-1 rounded hover:bg-rose-50 text-slate-300 hover:text-finance-red opacity-0 group-hover:opacity-100 transition-all duration-200" title="지우기">
+                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                    </button>
+                `;
+                listEl.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Form submit
+        document.getElementById('stock-share-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const author = document.getElementById('sb-author').value.trim();
+            const seed = document.getElementById('sb-seed').value;
+            const favorite = document.getElementById('sb-favorite').value.trim();
+            const content = document.getElementById('sb-content').value.trim();
+
+            if (!author || !favorite || !content) {
+                showToast("빈칸을 모두 채워주세요!");
+                return;
+            }
+
+            const entries = getFeedEntries();
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            const newEntry = {
+                id: Date.now(),
+                author,
+                seed,
+                favorite,
+                content,
+                date: dateStr
+            };
+
+            entries.push(newEntry);
+            localStorage.setItem('jubin_stocks_feed', JSON.stringify(entries));
+            
+            this.reset();
+            renderFeed();
+            showToast("주주 피드 등록 완료! 📈");
+        });
+
+        window.deleteFeedItem = function(id) {
+            let entries = getFeedEntries();
+            entries = entries.filter(e => e.id !== id);
+            localStorage.setItem('jubin_stocks_feed', JSON.stringify(entries));
+            renderFeed();
+            showToast("의견이 무사히 삭제되었습니다.");
+        }
+
+        // Initial launch actions
+        window.onload = function() {
+            renderPortfolios();
+            renderFeed();
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
